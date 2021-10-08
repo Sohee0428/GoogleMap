@@ -59,7 +59,22 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         adapter.notifyDataSetChanged()
     }
 
-
+    private fun setData(pois: Pois) {
+        val dataList = pois.poi.map {
+            SearchResultEntity(
+                name = it.name ?: "빌딩명 없음",
+                fullAddress = makeMainAddress(it),
+                locationLatLng = LocationLatLngEntity(
+                    it.noorLat,
+                    it.noorLon
+                )
+            )
+        }
+        adapter.setSearchResultList(dataList) {
+            Toast.makeText(this, "빌딩 이름 : ${it.name}, 주소 : ${it.fullAddress}, 위도/경도 : ${it.locationLatLng}", Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
 
     private fun searchKeyword(ketwordString: String) {
         launch(coroutineContext) {
@@ -83,5 +98,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             }
         }
     }
-
+    private fun makeMainAddress(poi: Poi): String =
+        if (poi.secondNo?.trim().isNullOrEmpty()) {
+            (poi.upperAddrName?.trim() ?: "") + " " +
+                    (poi.middleAddrName?.trim() ?: "") + " " +
+                    (poi.lowerAddrName?.trim() ?: "") + " " +
+                    (poi.detailAddrname?.trim() ?: "") + " " +
+                    poi.firstNo?.trim()
+        } else {
+            (poi.upperAddrName?.trim() ?: "") + " " +
+                    (poi.middleAddrName?.trim() ?: "") + " " +
+                    (poi.lowerAddrName?.trim() ?: "") + " " +
+                    (poi.detailAddrname?.trim() ?: "") + " " +
+                    (poi.firstNo?.trim() ?: "") + " " +
+                    poi.secondNo?.trim()
+        }
 }

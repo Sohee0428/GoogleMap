@@ -1,10 +1,12 @@
 package com.example.aoppart4chapter03
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.aoppart4chapter03.MapActivity.Companion.SEARCH_RESULT_EXTRA_KEY
 import com.example.aoppart4chapter03.databinding.ActivityMainBinding
 import com.example.aoppart4chapter03.model.LocationLatLngEntity
 import com.example.aoppart4chapter03.model.SearchResultEntity
@@ -71,8 +73,17 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             )
         }
         adapter.setSearchResultList(dataList) {
-            Toast.makeText(this, "빌딩 이름 : ${it.name}, 주소 : ${it.fullAddress}, 위도/경도 : ${it.locationLatLng}", Toast.LENGTH_SHORT)
+            Toast.makeText(
+                this,
+                "빌딩 이름 : ${it.name}, 주소 : ${it.fullAddress}, 위도/경도 : ${it.locationLatLng}",
+                Toast.LENGTH_SHORT
+            )
                 .show()
+            startActivity(
+                Intent(this, MapActivity::class.java).apply {
+                    putExtra(SEARCH_RESULT_EXTRA_KEY, it)
+                }
+            )
         }
     }
 
@@ -98,6 +109,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             }
         }
     }
+
     private fun makeMainAddress(poi: Poi): String =
         if (poi.secondNo?.trim().isNullOrEmpty()) {
             (poi.upperAddrName?.trim() ?: "") + " " +

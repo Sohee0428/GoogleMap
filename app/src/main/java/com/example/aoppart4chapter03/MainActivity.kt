@@ -34,13 +34,29 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         initAdapter()
         initViews()
+        bindViews()
+        initData()
 
     }
 
     private fun initAdapter() {
-        adapter = SearchRecyclerviewAdapter{
-            Toast.makeText(this, "아이템 클릭", Toast.LENGTH_SHORT).show()
+        adapter = SearchRecyclerviewAdapter()
+    }
+
+    private fun initViews() = with(binding) {
+        emptyResultTxt.isVisible = false
+        recycleView.adapter = adapter
+    }
+
+    private fun bindViews() = with(binding) {
+        searchBtn.setOnClickListener {
+            searchKeyword(searchBarInputEtx.text.toString())
         }
+    }
+
+    private fun initData() {
+//        빈 상태로 설정
+        adapter.notifyDataSetChanged()
     }
 
 

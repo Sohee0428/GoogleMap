@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.aoppart4chapter03.databinding.ViewholderSearchResultItemBinding
 import com.example.aoppart4chapter03.model.SearchResultEntity
 
-class SearchRecyclerviewAdapter: RecyclerView.Adapter<SearchRecyclerviewAdapter.SearchResultItemViewHolder>() {
+class SearchRecyclerviewAdapter :
+    RecyclerView.Adapter<SearchRecyclerviewAdapter.SearchResultItemViewHolder>() {
 
     private var searchResultList: List<SearchResultEntity> = listOf()
     private lateinit var searchResultClickListener: (SearchResultEntity) -> Unit
@@ -45,7 +46,10 @@ class SearchRecyclerviewAdapter: RecyclerView.Adapter<SearchRecyclerviewAdapter.
 
     override fun getItemCount(): Int = searchResultList.size
 
-    fun setSearchResultList(searchResultList: List<SearchResultEntity>, searchResultClickListener: (SearchResultEntity) -> Unit) {
+    fun setSearchResultList(
+        searchResultList: List<SearchResultEntity>,
+        searchResultClickListener: (SearchResultEntity) -> Unit
+    ) {
         this.searchResultList = searchResultList
         this.searchResultClickListener = searchResultClickListener
         notifyDataSetChanged()

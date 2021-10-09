@@ -16,7 +16,7 @@ data class AddressInfo(
     val legalDong: String,
     val legalDongCode: String,
     val legalDongCoord: LegalDongCoord,
-    val mappingDistance: Int,
+    val mappingDistance: String,
     val ri: String,
     val roadAddressKey: String,
     val roadCode: String,

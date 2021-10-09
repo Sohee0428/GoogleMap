@@ -172,6 +172,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
                         lat = locationLatLngEntity.latitude.toDouble(),
                         lon = locationLatLngEntity.longitude.toDouble()
                     )
+                    Log.d("text", "response >> " + response.body())
                     if (response.isSuccessful) {
                         val body = response.body()
                         withContext(Dispatchers.Main) {

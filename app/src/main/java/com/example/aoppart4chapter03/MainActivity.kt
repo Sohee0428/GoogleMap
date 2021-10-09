@@ -10,8 +10,8 @@ import com.example.aoppart4chapter03.MapActivity.Companion.SEARCH_RESULT_EXTRA_K
 import com.example.aoppart4chapter03.databinding.ActivityMainBinding
 import com.example.aoppart4chapter03.model.LocationLatLngEntity
 import com.example.aoppart4chapter03.model.SearchResultEntity
-import com.example.aoppart4chapter03.response1.search.Poi
-import com.example.aoppart4chapter03.response1.search.Pois
+import com.example.aoppart4chapter03.response.search.Poi
+import com.example.aoppart4chapter03.response.search.Pois
 import com.example.aoppart4chapter03.utility.RetrofitUtil
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
                 name = it.name ?: "빌딩명 없음",
                 fullAddress = makeMainAddress(it),
                 locationLatLng = LocationLatLngEntity(
-                    it.noorLat,
-                    it.noorLon
+                    it.noorLat.toFloat(),
+                    it.noorLon.toFloat()
                 )
             )
         }
@@ -88,13 +88,16 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun searchKeyword(ketwordString: String) {
+//        어느 화면에서 시작할지
         launch(coroutineContext) {
             try {
+//                IOThread로 바꿨다가
                 withContext(Dispatchers.IO) {
                     val response = RetrofitUtil.apiService.getSearchLocation(
                         keyword = ketwordString
                     )
                     if (response.isSuccessful) {
+//                        성공 시에는 MainThread로 바꿔주기
                         val body = response.body()
                         withContext(Dispatchers.Main) {
                             Log.e("response", body.toString())

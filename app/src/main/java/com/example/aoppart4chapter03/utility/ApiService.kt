@@ -2,7 +2,7 @@ package com.example.aoppart4chapter03.utility
 
 import com.example.aoppart4chapter03.Key
 import com.example.aoppart4chapter03.Url.GET_TMAP_LOCATION
-import com.example.aoppart4chapter03.response1.search.SearchResponse
+import com.example.aoppart4chapter03.response.search.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
